@@ -2,7 +2,15 @@
 
 VS Code에서 HTML, CSS, JavaScript를 직접 수정할 수 있는 독립 프로젝트입니다.
 React, Next.js, TypeScript, 번들러 없이 실행됩니다. 외부 npm 패키지도 필요하지 않습니다.
-기존 Sites 배포본을 수정하지 않고, 디자인과 기능을 일반 웹 프로젝트로 옮긴 사본입니다.
+로컬 프로젝트가 작업 원본입니다. GitHub Pages와 GPT Sites는 각각 검수용·운영용 배포본입니다.
+
+## 작업·검수·배포 원칙
+
+1. **작업:** 이 로컬 저장소에서 화면·기능·콘텐츠를 수정합니다.
+2. **검수:** `npm run build:pages`를 실행하고 `docs/`를 GitHub에 푸시합니다. 사용자 화면은 `https://wb96choi.github.io/torturedpoets/`, 관리자 화면은 `https://wb96choi.github.io/torturedpoets/admin/`에서 확인합니다. Pages 관리자 화면은 공개된 회차만 담은 **보기 전용 화면**이며 로그인·저장·업로드는 할 수 없습니다.
+3. **운영 배포:** GPT Sites 배포는 사용자가 명시적으로 요청할 때만 진행합니다. GitHub에 푸시해도 GPT Sites는 자동으로 바뀌지 않습니다.
+
+GitHub Pages는 검수 시점의 정적 사본입니다. 로컬 관리자에서 콘텐츠를 바꿔도 위 빌드와 푸시를 다시 하기 전에는 Pages에 반영되지 않습니다.
 
 ## 1. 바로 실행
 
@@ -14,8 +22,7 @@ React, Next.js, TypeScript, 번들러 없이 실행됩니다. 외부 npm 패키�
 npm start
 ```
 
-- 사용자: http://127.0.0.1:3000/
-- 관리자: http://127.0.0.1:3000/admin/
+- 사용자·관리자 주소는 터미널에 출력되는 포트를 사용합니다. 기본값은 각각 `http://127.0.0.1:3000/`, `http://127.0.0.1:3000/admin/`입니다. 이 PC의 `.env`는 3001 포트를 사용합니다.
 
 첫 실행 시 `data/catalog.example.json`을 복사해 `data/catalog.json`을 만듭니다.
 관리자 화면의 **로컬 미리보기 시작**을 누르면 편집할 수 있습니다.
@@ -134,10 +141,10 @@ npm run check
 npm test
 ```
 
-GitHub 저장소는 [wb96choi/torturedpoets](https://github.com/wb96choi/torturedpoets)입니다. 공개 화면을 GitHub Pages에서 보려면 정적 파일을 생성합니다.
+GitHub 저장소는 [wb96choi/torturedpoets](https://github.com/wb96choi/torturedpoets)입니다. 검수용 정적 파일을 생성합니다.
 
 ```sh
 npm run build:pages
 ```
 
-`docs/`에 공개된 회차와 업로드 파일의 사본이 생성됩니다. GitHub 저장소의 **Settings → Pages → Build and deployment**에서 **Deploy from a branch**, **main**, **/docs**를 선택하면 `https://wb96choi.github.io/torturedpoets/`에 게시됩니다. Pages는 정적 화면이라 관리자 편집·카카오 로그인은 제공하지 않습니다. 로컬 관리 화면에서 내용을 바꾼 후에는 위 빌드를 다시 실행해 `docs/` 변경분을 푸시해야 합니다.
+`docs/`에 공개된 회차와 업로드 파일의 사본, 보기 전용 관리자 화면이 생성됩니다. GitHub 저장소의 **Settings → Pages → Build and deployment**는 **Deploy from a branch**, **main**, **/docs**로 설정되어 있습니다. 생성 후 `git add docs && git commit -m "Update Pages preview" && git push`로 갱신합니다. Pages에서 관리자 편집·카카오 로그인은 제공하지 않습니다.
