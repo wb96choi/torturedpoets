@@ -1,0 +1,63 @@
+{
+  "currentId": "2026-11",
+  "editions": [
+    {
+      "id": "2026-11",
+      "title": "끝난 계절에도\n노래는 남아서.",
+      "subtitle": "조금 늦게 도착한 마음을 두 곡에 담아주세요.",
+      "color": "#53604b",
+      "images": [],
+      "published": true,
+      "demo": true,
+      "playlistUrl": "",
+      "pdf": "",
+      "reviewUrl": "",
+      "songUrl": "",
+      "reviewStart": "2026-11-22T00:00",
+      "reviewEnd": "2026-11-28T23:59",
+      "songStart": "",
+      "songEnd": ""
+    },
+    {
+      "id": "2026-10",
+      "title": "밤에만\n이해되는 노래",
+      "subtitle": "짙어진 밤, 선명해지는 마음",
+      "color": "#4c5860",
+      "images": [
+        "./assets/images/samples/oct-1.svg",
+        "./assets/images/samples/oct-2.svg",
+        "./assets/images/samples/oct-3.svg"
+      ],
+      "published": true,
+      "demo": true,
+      "playlistUrl": "",
+      "pdf": "",
+      "reviewUrl": "",
+      "songUrl": "",
+      "reviewStart": "",
+      "reviewEnd": "",
+      "songStart": "",
+      "songEnd": ""
+    },
+    {
+      "id": "2026-09",
+      "title": "여름이 끝난 줄\n알았는데",
+      "subtitle": "지나간 계절에 보내는 안부",
+      "color": "#847255",
+      "images": [
+        "./assets/images/samples/sep-1.svg",
+        "./assets/images/samples/sep-2.svg"
+      ],
+      "published": true,
+      "demo": true,
+      "playlistUrl": "",
+      "pdf": "",
+      "reviewUrl": "",
+      "songUrl": "",
+      "reviewStart": "",
+      "reviewEnd": "",
+      "songStart": "",
+      "songEnd": ""
+    }
+  ]
+}

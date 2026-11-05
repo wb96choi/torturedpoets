@@ -127,20 +127,17 @@ Vercel 같은 임시 파일시스템/서버리스에 그대로 올리면 수정�
 | `POST /api/admin/upload` | PDF·이미지 업로드 (관리자, base64 JSON) |
 | `/media/파일ID.확장자` | 업로드 파일, 비공개 회차는 관리자만 열람 |
 
-## 7. 검사·Git
+## 7. 검사·GitHub Pages
 
 ```sh
 npm run check
 npm test
 ```
 
-압축에는 소스와 예시 파일을 넣었습니다. GitHub 원격 저장소는 생성하지 않았습니다.
-자신의 저장소로 시작하려면 다음을 실행하세요.
+GitHub 저장소는 [wb96choi/torturedpoets](https://github.com/wb96choi/torturedpoets)입니다. 공개 화면을 GitHub Pages에서 보려면 정적 파일을 생성합니다.
 
 ```sh
-git init
-git add .
-git commit -m "Initial listening room project"
+npm run build:pages
 ```
 
-이후 본인 GitHub에서 빈 저장소를 만든 뒤 제공받은 원격 주소를 `git remote add origin`으로 연결하면 됩니다.
+`docs/`에 공개된 회차와 업로드 파일의 사본이 생성됩니다. GitHub 저장소의 **Settings → Pages → Build and deployment**에서 **Deploy from a branch**, **main**, **/docs**를 선택하면 `https://wb96choi.github.io/torturedpoets/`에 게시됩니다. Pages는 정적 화면이라 관리자 편집·카카오 로그인은 제공하지 않습니다. 로컬 관리 화면에서 내용을 바꾼 후에는 위 빌드를 다시 실행해 `docs/` 변경분을 푸시해야 합니다.
