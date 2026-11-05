@@ -30,7 +30,7 @@ async function body(req,max=300000){let size=0;const chunks=[];for await(const c
 function sessionCookie(value,age){return `aftertrack_session=${value}; Path=/; HttpOnly; SameSite=Strict; Max-Age=${age}${production?'; Secure':''}`}
 function stateCookie(value,age){return `aftertrack_kakao_state=${value}; Path=/api/auth/kakao/callback; HttpOnly; SameSite=Lax; Max-Age=${age}${production?'; Secure':''}`}
 function redirect(res,location,cookies){res.writeHead(302,{Location:location,'Cache-Control':'no-store',...(cookies?{'Set-Cookie':cookies}:{})});res.end()}
-const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.pdf':'application/pdf','.ico':'image/x-icon'};
+const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.ico':'image/x-icon'};
 async function file(res,path){try{const bytes=await readFile(path);res.writeHead(200,{'Content-Type':types[extname(path)]||'application/octet-stream','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Content-Disposition':'inline'});res.end(bytes)}catch(e){if(e.code!=='ENOENT')throw e;json(res,404,{error:'파일을 찾을 수 없어요.'})}}
 const server=http.createServer(async(req,res)=>{try{
  const path=new URL(req.url,'http://localhost').pathname;
@@ -70,11 +70,11 @@ const server=http.createServer(async(req,res)=>{try{
  }
  if(path==='/api/admin/upload'&&req.method==='POST'){
   const input=await body(req,29*1024*1024);if(typeof input.base64!=='string'||input.base64.length>28*1024*1024||! /^[A-Za-z0-9+/]*={0,2}$/.test(input.base64))return json(res,400,{error:'파일 인코딩을 확인해주세요.'});const bytes=Buffer.from(input.base64,'base64');if(!bytes.length||bytes.length>20*1024*1024)return json(res,400,{error:'파일은 1바이트 이상 20MB 이하로 선택해주세요.'});
-  const ext=bytes.subarray(0,5).toString()==='%PDF-'?'pdf':bytes[0]===137&&bytes.subarray(1,4).toString()==='PNG'?'png':bytes[0]===255&&bytes[1]===216&&bytes[2]===255?'jpg':bytes.subarray(0,4).toString()==='RIFF'&&bytes.subarray(8,12).toString()==='WEBP'?'webp':null;
-  if(!ext)return json(res,400,{error:'PDF, PNG, JPG, WebP 파일만 지원해요.'});const id=randomUUID()+'.'+ext;await writeFile(resolve(uploads,id),bytes,{flag:'wx'});return json(res,200,{url:'/media/'+id});
+  const ext=bytes[0]===137&&bytes.subarray(1,4).toString()==='PNG'?'png':bytes[0]===255&&bytes[1]===216&&bytes[2]===255?'jpg':bytes.subarray(0,4).toString()==='RIFF'&&bytes.subarray(8,12).toString()==='WEBP'?'webp':null;
+  if(!ext)return json(res,400,{error:'PNG, JPG, WebP 이미지만 지원해요.'});const id=randomUUID()+'.'+ext;await writeFile(resolve(uploads,id),bytes,{flag:'wx'});return json(res,200,{url:'/media/'+id});
  }
  if(path.startsWith('/api/'))return json(res,404,{error:'지원하지 않는 API예요.'});
- if(path.startsWith('/media/')){if(!/^\/media\/[a-f0-9-]+\.(pdf|png|jpg|webp)$/.test(path))return json(res,404,{error:'파일을 찾을 수 없어요.'});const {data}=await state();if(!admin(req)&&!data.editions.some(e=>e.published&&(e.pdf===path||e.images.includes(path))))return json(res,404,{error:'파일을 찾을 수 없어요.'});return file(res,resolve(uploads,path.slice(7)))}
+ if(path.startsWith('/media/')){if(!/^\/media\/[a-f0-9-]+\.(png|jpg|webp)$/.test(path))return json(res,404,{error:'파일을 찾을 수 없어요.'});const {data}=await state();if(!admin(req)&&!data.editions.some(e=>e.published&&(e.artImage===path||e.images.includes(path))))return json(res,404,{error:'파일을 찾을 수 없어요.'});return file(res,resolve(uploads,path.slice(7)))}
  if(!['GET','HEAD'].includes(req.method))return json(res,405,{error:'허용되지 않는 요청이에요.'});
  const relative=path==='/'?'index.html':path==='/admin'||path==='/admin/'?'admin/index.html':decodeURIComponent(path).replace(/^\/+/,''),target=resolve(publicDir,relative);
  if(!target.startsWith(publicDir+sep)||relative.split('/').some(p=>p.startsWith('.')))return json(res,404,{error:'페이지를 찾을 수 없어요.'});await file(res,target);

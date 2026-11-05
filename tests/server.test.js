@@ -19,13 +19,20 @@ test('실제 서버: 익명 권한 차단 / 관리자 저장 / 충돌 / 파일 �
  assert.equal((await call('/api/auth/login','POST',{},'','https://other.example')).status,403);
  const login=await call('/api/auth/login','POST',{});assert.equal(login.status,200);const cookie=login.headers.get('set-cookie').split(';')[0];
  let saved=await(await call('/api/admin/catalog','GET',null,cookie)).json();
- const upload=await call('/api/admin/upload','POST',{base64:Buffer.from('%PDF-1.4 test').toString('base64')},cookie);assert.equal(upload.status,200);const {url}=await upload.json();
+ const image='iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/pZkAAAAASUVORK5CYII=';
+ assert.equal((await call('/api/admin/upload','POST',{base64:Buffer.from('%PDF-1.4 test').toString('base64')},cookie)).status,400);
+ const upload=await call('/api/admin/upload','POST',{base64:image},cookie);assert.equal(upload.status,200);const {url}=await upload.json();
+ const artUpload=await call('/api/admin/upload','POST',{base64:image},cookie);assert.equal(artUpload.status,200);const {url:artUrl}=await artUpload.json();
  assert.equal((await call(url)).status,404);assert.equal((await call(url,'GET',null,cookie)).status,200);
- saved.data.editions[1].pdf=url;saved.data.editions[2].published=false;
+ assert.equal((await call(artUrl)).status,404);
+ saved.data.editions[0].artImage=artUrl;saved.data.editions[0].artCaption='작은 문장';saved.data.editions[1].images.push(url);saved.data.editions[2].published=false;
  const result=await call('/api/admin/catalog','PUT',saved,cookie);assert.equal(result.status,200);
  assert.equal((await call('/api/admin/catalog','PUT',saved,cookie)).status,409);
  assert.equal((await call(url)).status,200);
+ assert.equal((await call(artUrl)).status,200);
  const publicData=await(await call('/api/catalog')).json();assert.equal(publicData.editions.length,2);assert.equal(publicData.editions.some(e=>e.id==='2026-09'),false);
+ assert.equal(publicData.editions[0].artCaption,'작은 문장');
+ assert.equal('pdf' in publicData.editions[0],false);
  const invalid=await(await call('/api/admin/catalog','GET',null,cookie)).json();invalid.data.editions[0].songUrl='javascript:alert(1)';assert.equal((await call('/api/admin/catalog','PUT',invalid,cookie)).status,400);
  assert.equal((await call('/api/auth/logout','POST',{},cookie)).status,200);assert.equal((await call('/api/admin/catalog','GET',null,cookie)).status,403);
  }finally{proc.kill();await once(proc,'exit').catch(()=>{});await rm(temp,{recursive:true,force:true})}

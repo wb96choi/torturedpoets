@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="ko">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>여운 — 관리자 운영실</title><link rel="stylesheet" href="../assets/css/site.css"></head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>고통받은 시인들의 부서 — 관리자 운영실</title><link rel="stylesheet" href="../assets/css/site.css"></head>
 <body>
   <!-- 인증 방식은 서버 환경 변수에 따라 로컬 미리보기, 비밀번호, 카카오 로그인 중 하나로 결정됩니다. -->
   <main class="access" id="login-screen" hidden>
-    <a class="wordmark" href="../">여운<span>EDITOR'S ROOM</span></a>
+    <a class="wordmark" href="../">고통받은 시인들의 부서<span>EDITOR'S ROOM</span></a>
     <h1>운영자 공간에 오신 걸 환영해요.</h1>
     <p id="login-description"></p>
     <form id="login-form" class="form-grid"><label id="password-field">관리자 비밀번호<input type="password" id="password" autocomplete="current-password"></label><button class="button dark" id="login-button">관리자 로그인</button></form>
@@ -12,7 +12,7 @@
   </main>
   <div class="admin-layout" id="admin-app" hidden>
     <aside class="admin-sidebar">
-      <a class="wordmark" href="./">여운<span>EDITOR'S ROOM</span></a>
+      <a class="wordmark" href="./">관리자 탭<span>EDITOR'S ROOM</span></a>
       <div class="sidebar-section-label">운영 공간</div><div class="sidebar-current">☷ 월별 콘텐츠 관리</div>
       <div class="sidebar-section-label">월별 회차 <button class="icon-button" id="toggle-add" aria-label="새 회차 추가">＋</button></div>
       <form class="add-month" id="add-form" hidden><label>추가할 연월<input type="month" id="new-month" required></label><button class="button dark compact">회차 만들기</button></form>
@@ -20,7 +20,7 @@
       <div class="sidebar-bottom"><a class="button" href="../" target="_blank" rel="noopener noreferrer">사용자 사이트 보기 ↗</a><p>GitHub Pages에서는 화면만 검수할 수 있어요.</p></div>
     </aside>
     <div class="admin-workspace">
-      <header class="admin-topbar"><div><span class="eyebrow">MONTHLY CONTENT MANAGER</span><span class="admin-access" id="auth-label">관리자 전용</span></div><div><a class="textlink" href="../" target="_blank" rel="noopener noreferrer">사용자 화면 ↗</a><button class="button compact" id="logout">로그아웃</button></div></header>
+      <header class="admin-topbar"><div><span class="eyebrow">고통받은 시인들의 부서</span><span class="admin-access" id="auth-label">관리자 전용</span></div><div><a class="textlink" href="../" target="_blank" rel="noopener noreferrer">사용자 화면 ↗</a><button class="button compact" id="logout">로그아웃</button></div></header>
       <main class="admin-main">
         <div class="admin-pagehead"><div><span class="eyebrow">A LITTLE WORK, A LASTING RECORD.</span><h1 id="edition-heading">월별 콘텐츠 관리</h1><p>플레이리스트와 감상집, 접수 일정을 한곳에서 관리해요.</p></div><button class="button dark save-button" disabled>변경 사항 저장</button></div>
         <div id="feedback" class="feedback" role="status" hidden></div>
@@ -28,16 +28,16 @@
         <div class="admin-tabs" role="tablist" aria-label="회차 설정"><button data-tab="content" role="tab" aria-controls="panel-content" class="active">♫ 플리·감상집</button><button data-tab="schedule" role="tab" aria-controls="panel-schedule">◷ 접수 일정·링크</button><button data-tab="publish" role="tab" aria-controls="panel-publish">◉ 공개 설정</button></div>
         <fieldset id="editor" class="editor-fieldset">
           <section id="panel-content" role="tabpanel">
-            <div class="edit-card"><div class="edit-card-title"><span class="square-icon">♫</span><div><h2>이번 달의 플레이리스트</h2><p>유튜브 플레이리스트 주소를 등록하면 사용자 화면에서 재생할 수 있어요.</p></div></div>
+            <div class="edit-card"><div class="edit-card-title"><span class="square-icon">♫</span><div><h2>이번 달의 플레이리스트</h2><p>유튜브 플레이리스트 주소를 등록하면 사용자 화면에서 YouTube로 이동할 수 있어요.</p></div></div>
               <div class="form-grid"><label>회차 제목<textarea data-field="title" maxlength="100" class="title-input"></textarea></label><label>한 줄 소개<input data-field="subtitle" maxlength="300"></label><label>YouTube / YouTube Music 플레이리스트 링크<input data-field="playlistUrl" type="url" placeholder="https://www.youtube.com/playlist?list=…"><span class="field-help">list=가 포함된 플레이리스트 주소를 등록해주세요.</span></label></div>
             </div>
-            <div class="edit-card"><div class="edit-card-title"><span class="square-icon">▤</span><div><h2>감상집 PDF</h2><p>PDF 파일 한 개 · 최대 20MB</p></div></div><input id="pdf-file" type="file" accept="application/pdf,.pdf" hidden><div id="pdf-status"></div></div>
+            <div class="edit-card"><div class="edit-card-title"><span class="square-icon">▧</span><div><h2>플레이리스트 자켓</h2><p>사진을 올리면 사용자 화면에 표시돼요. 사진이 없으면 단색 화면이 나와요.</p></div></div><input id="art-file" type="file" accept="image/png,image/jpeg,image/webp" hidden><div id="art-status"></div><div class="form-grid"><label>사진 위 캡션<input data-field="artCaption" maxlength="120" placeholder="짧은 문장을 적어주세요"></label></div><p class="field-help">JPG · PNG · WebP / 최대 20MB. 업로드 후 변경 사항을 저장해주세요.</p></div>
             <div class="edit-card"><div class="edit-card-title"><span class="square-icon">▧</span><div><h2>이미지 슬라이드 <span id="image-count" class="muted"></span></h2><p>등록 후 화살표로 순서를 바꿀 수 있어요.</p></div><button class="button compact" id="add-images">＋ 이미지 추가</button></div><input id="image-files" type="file" accept="image/png,image/jpeg,image/webp" multiple hidden><div class="image-grid" id="image-list"></div><p class="field-help">JPG · PNG · WebP / 최대 40장 / 파일당 20MB. 업로드 후 변경 사항을 저장해주세요.</p></div>
           </section>
           <section id="panel-schedule" role="tabpanel" hidden>
-            <div class="info-note">한국 시간(KST) 기준으로 접수 버튼이 열리고 닫힙니다. 외부 구글폼 자체의 접수 마감도 별도로 설정해주세요.</div>
-            <div class="edit-card"><div class="edit-card-title"><div><h2>이 회차의 감상평 접수</h2><p>이 회차가 ‘이번 달’이면 홈에 표시됩니다.</p></div></div><div class="form-grid"><div class="form-two"><label>접수 시작<input type="datetime-local" data-field="reviewStart"></label><label>접수 마감<input type="datetime-local" data-field="reviewEnd"></label></div><label>감상평 제출 폼 링크<input type="url" data-field="reviewUrl" placeholder="https://forms.gle/…"></label></div></div>
-            <div class="edit-card"><div class="edit-card-title"><div><h2>이 회차에 들을 신청곡 접수</h2><p>이 회차가 ‘이번 달의 다음 달’이면 홈에 표시됩니다. 1인 두 곡 접수용 폼을 연결하세요.</p></div></div><div class="form-grid"><div class="form-two"><label>접수 시작<input type="datetime-local" data-field="songStart"></label><label>접수 마감<input type="datetime-local" data-field="songEnd"></label></div><label>신청곡 제출 폼 링크<input type="url" data-field="songUrl" placeholder="https://forms.gle/…"></label></div></div>
+            <div class="info-note"><strong id="schedule-pair"></strong><br>두 폼은 보통 선택한 달의 마지막 주에 함께 엽니다. 아래 시작·마감은 각각 설정하며, 시간은 한국 시간(KST) 기준입니다. 구글폼 자체의 마감도 따로 설정해주세요.</div>
+            <div class="edit-card"><div class="edit-card-title"><div><h2 id="schedule-review-title">감상평 접수</h2><p>선택한 달에 들은 플리의 감상평을 받는 폼입니다.</p></div></div><div class="form-grid"><div class="form-two"><label>감상평 접수 시작<input type="datetime-local" data-field="reviewStart"></label><label>감상평 접수 마감<input type="datetime-local" data-field="reviewEnd"></label></div><label>감상평 제출 폼 링크<input type="url" data-field="reviewUrl" placeholder="https://forms.gle/…"></label></div></div>
+            <div class="edit-card"><div class="edit-card-title"><div><h2 id="schedule-song-title">다음 달 신청곡 접수</h2><p>다음 달에 들을 노래 두 곡을 받는 폼입니다.</p></div></div><div id="next-month-missing" class="info-note" hidden><span id="next-month-missing-text"></span> <button type="button" class="button compact" id="create-next">다음 달 회차 만들기</button></div><div id="next-month-fields" class="form-grid"><div class="form-two"><label>신청곡 접수 시작<input type="datetime-local" data-next-field="songStart"></label><label>신청곡 접수 마감<input type="datetime-local" data-next-field="songEnd"></label></div><label>신청곡 제출 폼 링크<input type="url" data-next-field="songUrl" placeholder="https://forms.gle/…"></label><label class="checkbox-label"><input type="checkbox" id="next-published"><span><strong id="next-published-label">다음 달 회차 공개하기</strong><small>켜야 신청곡 접수 버튼이 사용자 화면에 표시됩니다.</small></span></label></div></div>
           </section>
           <section id="panel-publish" role="tabpanel" hidden>
             <div class="edit-card"><div class="edit-card-title"><div><h2>사용자에게 보여줄 내용</h2><p>공개 회차만 사용자 화면에 표시됩니다.</p></div></div><div class="form-grid">

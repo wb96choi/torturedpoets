@@ -1,4 +1,4 @@
-import { $, $$, esc, monthLabel } from './shared.js';
+import { $, $$, esc, monthLabel, nextMonth, editionNavItem, refreshMonthMarquees } from './shared.js';
 
 const siteRoot = new URL('../../', import.meta.url);
 const assetUrl = value => new URL(value.replace(/^\.\//, ''), siteRoot).href;
@@ -12,9 +12,8 @@ function render() {
   $('#summary-title').textContent = edition.title.replace(/\n/g, ' ');
   $('#summary-state').textContent = edition.published ? '사용자에게 공개' : '비공개 초안';
   $('#save-state').textContent = '화면 검수용';
-  $('#month-list').innerHTML = catalog.editions.slice().sort((a, b) => b.id.localeCompare(a.id)).map(item =>
-    `<button data-month="${esc(item.id)}" class="${item.id === selected ? 'active' : ''}"><span>${monthLabel(item.id)}${catalog.currentId === item.id ? ' · 이번 달' : ''}</span><span class="status-dot">${item.published ? '공개' : '비공개'}</span></button>`
-  ).join('');
+  $('#month-list').innerHTML = catalog.editions.slice().sort((a, b) => b.id.localeCompare(a.id)).map(item => editionNavItem(item, selected)).join('');
+  refreshMonthMarquees($('#month-list'));
   $$('[data-field]').forEach(input => {
     if (input.type === 'checkbox') input.checked = edition[input.dataset.field];
     else input.value = edition[input.dataset.field] ?? '';
@@ -22,9 +21,22 @@ function render() {
   $('#make-current').checked = catalog.currentId === selected;
   $('#make-current').disabled = true;
   $('#current-hint').textContent = `현재 지정: ${monthLabel(catalog.currentId)}`;
-  $('#pdf-status').innerHTML = edition.pdf
-    ? `<div class="registered-file"><span>▤</span><div><strong>감상집 PDF 등록됨</strong><a href="${esc(assetUrl(edition.pdf))}" target="_blank" rel="noopener noreferrer">파일 확인 ↗</a></div></div>`
-    : '<button class="upload-zone" disabled><strong>PDF 파일 선택</strong><span>PDF · 최대 20MB</span></button>';
+  const nextId = nextMonth(selected);
+  const next = catalog.editions.find(item => item.id === nextId);
+  $('#schedule-pair').textContent = `${monthLabel(selected)} 감상평 + ${monthLabel(nextId)} 신청곡`;
+  $('#schedule-review-title').textContent = `${monthLabel(selected)} 감상평 접수`;
+  $('#schedule-song-title').textContent = `${monthLabel(nextId)} 신청곡 접수`;
+  $('#next-month-missing').hidden = !!next;
+  $('#next-month-fields').hidden = !next;
+  $('#next-month-missing-text').textContent = `${monthLabel(nextId)} 회차가 검수본에 없어요.`;
+  $('#create-next').hidden = true;
+  $('#next-published-label').textContent = `${monthLabel(nextId)} 회차 공개하기`;
+  $$('[data-next-field]').forEach(input => { input.value = next?.[input.dataset.nextField] ?? ''; input.readOnly = true; });
+  $('#next-published').checked = !!next?.published;
+  $('#next-published').disabled = true;
+  $('#art-status').innerHTML = edition.artImage
+    ? `<div class="art-preview"><img src="${esc(assetUrl(edition.artImage))}" alt="등록한 플레이리스트 자켓"><div><strong>자켓 사진 등록됨</strong></div></div>`
+    : '<button class="upload-zone" disabled><strong>자켓 사진 선택</strong><span>로컬 관리자에서 등록해주세요.</span></button>';
   $('#image-count').textContent = `${edition.images.length} / 40`;
   $('#image-list').innerHTML = edition.images.map((url, index) =>
     `<div class="image-tile"><img src="${esc(assetUrl(url))}" alt="감상집 ${index + 1}페이지"><div><span>${index + 1}</span><button class="icon-button" disabled>↑</button><button class="icon-button" disabled>↓</button><button class="icon-button" disabled>✕</button></div></div>`
@@ -54,6 +66,7 @@ $('#month-list').addEventListener('click', event => {
     render();
   }
 });
+window.addEventListener('resize', () => refreshMonthMarquees($('#month-list')));
 
 try {
   const response = await fetch(new URL('../../catalog.json', import.meta.url), { cache: 'no-store' });

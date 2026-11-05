@@ -24,14 +24,14 @@ for (const edition of published.editions) {
   const asset = async value => {
     if (typeof value !== 'string' || !value) return value;
     if (value.startsWith('/assets/')) return `.${value}`;
-    if (!/^\/media\/[a-f0-9-]+\.(?:pdf|png|jpg|webp)$/.test(value)) return value;
+    if (!/^\/media\/[a-f0-9-]+\.(?:png|jpg|webp)$/.test(value)) return value;
     const file = value.slice('/media/'.length);
     await mkdir(join(output, 'media'), { recursive: true });
     await cp(join(root, 'uploads', file), join(output, 'media', file));
     return `.${value}`;
   };
   edition.images = await Promise.all(edition.images.map(asset));
-  edition.pdf = await asset(edition.pdf);
+  edition.artImage = await asset(edition.artImage);
 }
 await writeFile(join(output, 'catalog.json'), JSON.stringify(published, null, 2) + '\n');
 await writeFile(join(output, 'assets/js/config.js'), "export const API = Object.freeze({ catalog: new URL('../../catalog.json', import.meta.url).href });\n");

@@ -3,61 +3,70 @@
   "editions": [
     {
       "id": "2026-11",
-      "title": "끝난 계절에도\n노래는 남아서.",
-      "subtitle": "조금 늦게 도착한 마음을 두 곡에 담아주세요.",
-      "color": "#53604b",
-      "images": [],
-      "published": true,
-      "demo": true,
-      "playlistUrl": "",
-      "pdf": "",
+      "title": "GAEUL",
+      "subtitle": "...새로운 컬러의 알고리듬?",
+      "playlistUrl": "https://youtube.com/playlist?list=PLb2IE5HmKWTk&si=UME5rdY36vZJZDfh",
       "reviewUrl": "",
       "songUrl": "",
       "reviewStart": "2026-11-22T00:00",
       "reviewEnd": "2026-11-28T23:59",
       "songStart": "",
-      "songEnd": ""
+      "songEnd": "",
+      "color": "#53604b",
+      "published": true,
+      "demo": true,
+      "images": []
     },
     {
       "id": "2026-10",
       "title": "밤에만\n이해되는 노래",
       "subtitle": "짙어진 밤, 선명해지는 마음",
-      "color": "#4c5860",
-      "images": [
-        "./assets/images/samples/oct-1.svg",
-        "./assets/images/samples/oct-2.svg",
-        "./assets/images/samples/oct-3.svg"
-      ],
-      "published": true,
-      "demo": true,
       "playlistUrl": "",
-      "pdf": "",
       "reviewUrl": "",
       "songUrl": "",
       "reviewStart": "",
       "reviewEnd": "",
       "songStart": "",
-      "songEnd": ""
+      "songEnd": "",
+      "color": "#4c5860",
+      "published": true,
+      "demo": true,
+      "images": [
+        "./media/d8740970-b798-49ff-a60f-9744806fffbb.jpg",
+        "./media/2cc234c5-9224-463e-a835-afe3c153c463.jpg",
+        "./media/3f8b2528-6965-4e6f-9f45-7e9a22027991.jpg",
+        "./media/05bd44d3-ebd1-4d7e-9517-96076270fc3c.jpg",
+        "./media/7bb1f0f5-a464-4826-9b5e-ef8e9348de37.jpg",
+        "./media/755a9251-5b1c-4637-8348-5a8b0ed57024.jpg",
+        "./media/acb371ce-3ba6-48bf-a853-6df16faf2f72.jpg",
+        "./media/9125c862-d81f-4c7c-8603-4f87436026c5.jpg",
+        "./media/c40c948e-a11e-4d3c-9ea5-78ecc440fd8e.jpg",
+        "./media/2ce9ea04-8e7d-4422-bfd6-ebbddfbb2ff2.jpg",
+        "./media/060234aa-b849-4600-8279-d8e3c4d6ed82.jpg",
+        "./media/cde360ba-8399-4dfe-a498-f8a5bfb00783.jpg",
+        "./media/43e71638-aa7c-4f02-8ff9-c1f0dd3effe9.jpg",
+        "./media/9e5c8083-0dae-42fc-8150-bc73a71bd7e4.jpg",
+        "./media/c2279e74-f2fa-4be9-9b00-7914c97a2eea.jpg"
+      ]
     },
     {
       "id": "2026-09",
       "title": "여름이 끝난 줄\n알았는데",
       "subtitle": "지나간 계절에 보내는 안부",
-      "color": "#847255",
-      "images": [
-        "./assets/images/samples/sep-1.svg",
-        "./assets/images/samples/sep-2.svg"
-      ],
-      "published": true,
-      "demo": true,
       "playlistUrl": "",
-      "pdf": "",
       "reviewUrl": "",
       "songUrl": "",
       "reviewStart": "",
       "reviewEnd": "",
       "songStart": "",
-      "songEnd": ""
+      "songEnd": "",
+      "color": "#847255",
+      "published": true,
+      "demo": true,
+      "images": [
+        "./assets/images/samples/sep-1.svg",
+        "./assets/images/samples/sep-2.svg"
+      ]
     }
   ]
 }
