@@ -1,0 +1,9 @@
+{
+  "name": "aftertrack-listening-room",
+  "version": "1.0.0",
+  "private": true,
+  "description": "여운 월간 선곡 모임 — 수정 가능한 HTML/CSS/JS 프로젝트",
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {"start": "node --env-file-if-exists=.env server/index.js", "dev": "node --watch --env-file-if-exists=.env server/index.js", "test": "node --test tests/*.test.js", "check": "node --check server/index.js && node --check server/kakao.js && node --check public/assets/js/reader.js && node --check public/assets/js/admin.js"}
+}

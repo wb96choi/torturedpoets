@@ -1,0 +1,11 @@
+node_modules/
+.env
+.env.*
+!.env.example
+uploads/*
+!uploads/.gitkeep
+data/catalog.json
+data/*.tmp
+sites/aftertrack-share/
+.DS_Store
+*.log
